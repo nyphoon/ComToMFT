@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestPlan>
+	<information author="nyphoon" product="simple host">This is the test plan example of ComToMFT project.</information>
+	
+	<TestItemList>
+		<TestItem name="concept" way="serial" skip="yes">
+			<operation name="test_ls">
+				<msg type="ok_no" title="start">start operation!</msg>
+				<command>ls</command>
+				<verify method="occour">test.txt</verify>
+				<msg type="countdown"/>
+				<command>$$$SIG@INT</command>
+			</operation>
+			<operation name="concept">
+				<command>ping</command>
+				<verify method="manual"/>
+				<command>$$$SIG@INT</command>
+			</operation>
+			<serial/>
+		</TestItem>
+		
+		<TestItem name="pure operation" way="none" skip="yes">
+			<operation name="test_ls">
+				<msg type="ok_no" title="start">紅LED?</msg>
+			</operation>
+		</TestItem>
+		
+		<TestItem name="hello" way="custom">
+			<custom name="hello" command="hello.exe" result="verify">
+				<verify method="occour_in_stdout">hello</verify>
+			</custom>
+		</TestItem>
+		
+		<TestItem name="BLE" way="custom" skip="yes">
+			<custom name="BLED112" command="BLED112.exe COM8 auto" result="copy">
+				<copy>BLED112_sample_result.bat</copy>
+			</custom>
+		</TestItem>
+		
+	</TestItemList>
+	
+</TestPlan>
