@@ -12,6 +12,6 @@ def msg_d(msg):
         msg = r'[debug] '+ msg
         print(msg)
 
-dir_result = r'_result/'
+dir_result = r'MFT_result/'
 dir_tool_custom = r'MFT_tool_custom/'
 dir_tool_native = r'MFT_tool_native/'

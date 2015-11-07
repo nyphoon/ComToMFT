@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestPlan>
-	<information author="nyphoon" product="simple host">This is the test plan example of ComToMFT project.</information>
+	<information author="nyphoon" product="Linux UART">This is the test plan example of ComToMFT project.</information>
 	
 	<TestItemList>
-		<TestItem name="concept" way="serial" skip="yes">
+		<TestItem name="serial demo" way="serial" skip="yes">
+			<serial name="COM7" rate="115200"/>
+			<operation name="connect">
+				<way op="start"/>
+			</operation>
 			<operation name="test_ls">
 				<msg type="ok_no" title="start">start operation!</msg>
-				<command>ls</command>
+				<read op="start"/>
+				<write>ls</write>
+				<delay>1000</delay>
+				<read op="stop"/>
 				<verify method="occour">test.txt</verify>
-				<msg type="countdown"/>
-				<command>$$$SIG@INT</command>
 			</operation>
-			<operation name="concept">
-				<command>ping</command>
+			<operation name="test_ping">
+				<read op="start"/>
+				<write>ping</write>
+				<msg type="countdown" title="let's wait ping">5000</msg>
+				<command>@INT@03</command>
+				<read op="stop"/>
 				<verify method="manual"/>
-				<command>$$$SIG@INT</command>
 			</operation>
-			<serial/>
+			<operation name="disconnect">
+				<way op="stop"/>
+			</operation>
 		</TestItem>
 		
-		<TestItem name="pure operation" way="none" skip="yes">
-			<operation name="test_ls">
+		<TestItem name="pure operation" way="" skip="yes">
+			<operation name="only message">
 				<msg type="ok_no" title="start">紅LED?</msg>
 			</operation>
 		</TestItem>
 		
 		<TestItem name="hello" way="custom">
-			<custom name="hello" command="hello.exe" result="verify">
+			<custom name="hello" command="hello.exe"></custom>
+			<operation name="lots of verification way">
+				<read op="start"/>
+				<way op="start"/>
+				<delay>1000</delay>
+				<read op="stop"/>
 				<verify method="occour_in_stdout">hello</verify>
-			</custom>
+				<verify method="copy">sample_result.bat</verify>
+				<verify method="re_search">(\d+)\.(\d+)</verify>
+				<way op="stop"/>
+			</operation>
 		</TestItem>
-		
-		<TestItem name="BLE" way="custom" skip="yes">
-			<custom name="BLED112" command="BLED112.exe COM8 auto" result="copy">
-				<copy>BLED112_sample_result.bat</copy>
-			</custom>
-		</TestItem>
-		
 	</TestItemList>
 	
 </TestPlan>
