@@ -1,53 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TestPlan>
-	<information author="nyphoon" product="Linux UART">This is the test plan example of ComToMFT project.</information>
+<testplan>
+	<information author="nyphoon" product="Linux UART">
+		This is the test plan example of ComToMFT project.
+	</information>
+
+	<way_list>
+		<way id="sample_serial" type="serial" port="COM7" baudrate="115200"/>
+		<way id="hello" type="custom" command="getmac.exe"/>
+	</way_list>
 	
-	<TestItemList>
-		<TestItem name="serial demo" way="serial" skip="yes">
-			<serial name="COM7" rate="115200"/>
-			<operation name="connect">
-				<way op="start"/>
-			</operation>
-			<operation name="test_ls">
+	<testitem_list>
+		<testitem name="serial demo" way="sample_serial" skip="no">
+			<operation id="01" name="test_ls">
 				<msg type="ok_no" title="start">start operation!</msg>
-				<read op="start"/>
-				<write>ls</write>
-				<delay>1000</delay>
-				<read op="stop"/>
-				<verify method="occour">test.txt</verify>
+				<way op="send">ls</way>
+				<msg type="countdown" title="delay demo">1000</msg>
+				<verify method="occour" name="result1">test.txt</verify>
+				<verify method="occour" name="result2">test.txt</verify>
 			</operation>
 			<operation name="test_ping">
-				<read op="start"/>
-				<write>ping</write>
+				<way op="send">ping</way>
 				<msg type="countdown" title="let's wait ping">5000</msg>
-				<command>@INT@03</command>
-				<read op="stop"/>
-				<verify method="manual"/>
+				<way op="send" hex="yes">3</way>
+				<verify method="manual" name="result3"/>
 			</operation>
-			<operation name="disconnect">
-				<way op="stop"/>
-			</operation>
-		</TestItem>
+		</testitem>
 		
-		<TestItem name="pure operation" way="" skip="yes">
-			<operation name="only message">
-				<msg type="ok_no" title="start">紅LED?</msg>
-			</operation>
-		</TestItem>
-		
-		<TestItem name="hello" way="custom">
-			<custom name="hello" command="hello.exe"></custom>
+		<testitem name="hello" way="hello">
 			<operation name="lots of verification way">
-				<read op="start"/>
-				<way op="start"/>
-				<delay>1000</delay>
-				<read op="stop"/>
-				<verify method="occour_in_stdout">hello</verify>
-				<verify method="copy">sample_result.bat</verify>
-				<verify method="re_search">(\d+)\.(\d+)</verify>
-				<way op="stop"/>
+				<msg type="countdown" title="delay demo">1000</msg>
+				<verify method="occour" name="result4">hello</verify>
+				<verify method="copy" name="result5.bat">sample_result.bat</verify>
+				<verify method="re_match" name="result6">(\d+)\.(\d+)</verify>
 			</operation>
-		</TestItem>
-	</TestItemList>
+		</testitem>
+	</testitem_list>
 	
-</TestPlan>
+</testplan>

@@ -10,7 +10,7 @@ def equal(a, b):
     return a==b
 
 # this is generator function
-def re_search(pattern, expression, content):
+def re_search_each(pattern, expression, content):
     m = re.search(expression, content)
     if m is None:
         yield False
@@ -21,18 +21,16 @@ def re_search(pattern, expression, content):
         if pattern == target:
             yield True
 
-def re_search_all_equal(pattern, expression, content):
-    for result in re_search(pattern, expression, content):
+def re_search(pattern, expression, content):
+    for result in re_search_each(pattern, expression, content):
         if not result:
             return False
     return True
     
 def re_match(expression, content):
     m = re.match(expression, content)
-
     if m is None:
         return False
-
     return True
 
 # Test

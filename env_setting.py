@@ -1,4 +1,5 @@
 ﻿# coding=UTF-8
+import os
 
 # message
 def msg(msg):
@@ -13,5 +14,7 @@ def msg_d(msg):
         print(msg)
 
 dir_result = r'MFT_result/'
-dir_tool_custom = r'MFT_tool_custom/'
-dir_tool_native = r'MFT_tool_native/'
+
+def setup_dir_result():
+    if not os.path.exists(dir_result):
+        os.makedirs(dir_result)

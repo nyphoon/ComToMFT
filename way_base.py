@@ -1,32 +1,34 @@
-
 import abc
 
 class WayBase(object):
 	__metaclass__ = abc.ABCMeta
 
 	@abc.abstractmethod
-	def connect(self, **kwargs):
+	def __init__(self, **kwargs):
 		pass
 
 	@abc.abstractmethod
-	def disconnect(self):
+	def open(self):
 		pass
 
 	@abc.abstractmethod
-	def read(self):
+	def close(self):
 		pass
 
 	@abc.abstractmethod
-	def write(self, data):
+	def send(self, data):
 		pass
 
-	# Craete thread to read data
 	@abc.abstractmethod
-	def read_start(self, data):
+	def recv_start(self):
 		pass
 	@abc.abstractmethod
-	def read_stop(self, data):
+	def recv_stop(self):
+		pass
+
+	@abc.abstractmethod
+	def get_data(self):
 		pass
 	@abc.abstractmethod
-	def read_data_get(self, data):
+	def clear_data(self):
 		pass
